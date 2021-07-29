@@ -1,51 +1,32 @@
+// IMPORTS
 const fsPromises = require('fs/promises')
 const fs = require('fs')
 const path = require('path')
 const finder = require('tiny-glob')
 const axios = require('axios')
 
+// ENDPOINTS
 const orderEndpoint = 'http://www.design-ink.com/so/json/soitems.php'
-let examplePath = "/Volumes/Film Output Files-1/A-Accessory/BG-Bubba Gump/Japan versions/S-BG0012J Bubba Gump Winged Name/S-BG0012 TOKYO.pdf"
+// NOTE: examplePath --> "/Volumes/Film Output Files-1/A-Accessory/BG-Bubba Gump/Japan versions/S-BG0012J Bubba Gump Winged Name/S-BG0012 TOKYO.pdf"
 let destination;
 
+// Arguments from BASH
 const so = process.argv[4]
 const sd = process.argv[2]
 const processType = process.argv[3] || null
 
+// TERM MAPPING
 const regionCodeMap = { AK: "Alaska", AP: "Antelope Point", BG: "Bubba Gump", BM: "Beach Mart", C: "Custom", CAL: "California", CC: "Colorado", CF: "Cedar Fair", CON: "Concept 360", CSB: "Shirt Off My Back", DC: "Destination Custom", GF: "General Font", GI: "Gonzo Inn", H: "Hobbies", HC: "Hawaii Custom", LAN: "Landrys", LG: "Lagoon", LK: "Lake", LP: "Lake Powell", M: "Mountain", MAC: "Macs Merc", ME: "Mountain East", MW: "Midwest", N: "Nautical", P: "Patriotic", R: "Rafting", SAM: "Shelby", SB: "Snowbird", SBSN: "Snowbasin", SDC: "Silver Dollar City", SF: "Six Flags", SMB: "Smokey bear", SP: "Space", SPW: "Sportsman's Warehouse", SU: "Ski Utah", SW: "Southwest", T: "Tropical", UT: "Utah", VC: "Vail Corp", W: "Winter", WS: "Western", WY: "Wyoming", Z: "Zoo" }
-const typeCodeMap = {
-  PSTKR: 'STICKER',
-  MPSTKR: 'STICKER',
-  STKR: 'STICKER',
-  MAG: 'STICKER',
-  HPMAG: 'STICKER',
-  HOMEC: 'COASTER',
-  CARC: 'COASTER',
-  MMAG: 'STICKER',
-  SOCK: 'SOCK'
-}
-const typeVersionMap = {
-  PSTKR: 'REG',
-  MPSTKR: 'MINI',
-  MAG: 'MAG',
-  HPMAG: 'MAG',
-  MMAG: 'MAG/_MINI'
-}
-const scheduleType = {
-  PSTKR: 'STICKER',
-  MPSTKR: 'STICKER',
-  MAG: 'STICKER',
-  MMAG: 'STICKER',
-  HPMAG: 'HPMAG',
-  HOMEC: 'COASTER',
-  CARC: 'COASTER',
-  SOCK: 'SOCK',
-  SHIRT: 'SHIRT'
-}
+const typeCodeMap = { PSTKR: 'STICKER', MPSTKR: 'STICKER', STKR: 'STICKER', MAG: 'STICKER', HPMAG: 'STICKER', HOMEC: 'COASTER', CARC: 'COASTER', MMAG: 'STICKER', SOCK: 'SOCK' }
+const typeVersionMap = { PSTKR: 'REG', MPSTKR: 'MINI', MAG: 'MAG', HPMAG: 'MAG', MMAG: 'MAG/_MINI' }
+const scheduleType = { PSTKR: 'STICKER', MPSTKR: 'STICKER', MAG: 'STICKER', MMAG: 'STICKER', HPMAG: 'HPMAG', HOMEC: 'COASTER', CARC: 'COASTER', SOCK: 'SOCK', SHIRT: 'SHIRT' }
+
+// COUNTERS
 let failCount = 0
 let successCount = 0
 let totalCount = 0
 
+// FUNCTIONS
 async function processOrder(orderNumber,schedule){
   let orderInfo = await getOrderInfo(orderNumber)
   if(processType === 'SOCK'){
@@ -299,37 +280,5 @@ function getScheduleType(type){
   return st
 }
 
+//INITIATE
 processOrder(so,sd)
-
-/*
-STHINF: 'SIGN',
-STHINW
-STHINA
-SSRF:
-SSRW
-SSRA
-SLSF
-SLSW
-SLSA
-SMRF
-SMRW
-SMRA
-SSSF
-SSSW
-SSSA
-SSCF
-SSCW
-SSCA
-SLRF
-SLRW
-SLRA
-SSRF
-SSRW
-SSRA
-
-SMRW
-SSCW
-SLCW
-SLSA
-SSCA
-*/
