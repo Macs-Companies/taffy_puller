@@ -16,7 +16,7 @@ const regionCodeMap = { AK: "Alaska", AP: "Antelope Point", BG: "Bubba Gump", BM
 const typeCodeMap = {
   PSTKR: 'STICKER',
   MPSTKR: 'STICKER',
-  STKR: '',
+  STKR: 'STICKER',
   MAG: 'STICKER',
   HPMAG: 'STICKER',
   HOMEC: 'COASTER',
@@ -282,7 +282,8 @@ function deconstructSignName(itemName){
 
 async function findSizeFolder(size,glob){
   let folders = await finder(glob+'*')
-  let sizeFolder = folders.find(f => f.replace(' ','').replace('.','_').toUpperCase().includes(size))
+  // console.log(glob+' :',folders);
+  let sizeFolder = folders.find(f => f.replace(/\s/g,'').replace('.','_').toUpperCase().includes(size))
   if(sizeFolder){
     return sizeFolder
   }else{
