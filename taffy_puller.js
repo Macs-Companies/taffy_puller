@@ -4,6 +4,7 @@ const fs = require('fs')
 const path = require('path')
 const finder = require('tiny-glob')
 const axios = require('axios')
+require('dotenv').config()
 
 // ENDPOINTS
 const orderEndpoint = 'http://www.design-ink.com/so/json/soitems.php'
@@ -30,9 +31,9 @@ let totalCount = 0
 async function processOrder(orderNumber,schedule){
   let orderInfo = await getOrderInfo(orderNumber)
   if(processType === 'SOCK'){
-    destination = `/Users/*/Desktop/_SOCKS/${orderInfo.so} ${orderInfo.customer.replace(/\//g,' ')}/`
+    destination = `/Users/${USERNAME}/Desktop/_SOCKS/${orderInfo.so} ${orderInfo.customer.replace(/\//g,' ')}/`
   }else {
-    destination = `/Users/*/Desktop/_PRINTPREP/_${processType}/${orderInfo.so} ${orderInfo.customer.replace(/\//g,' ')}/`
+    destination = `/Users/${USERNAME}/Desktop/_PRINTPREP/_${processType}/${orderInfo.so} ${orderInfo.customer.replace(/\//g,' ')}/`
   }
   await fsPromises.mkdir(destination).catch(function(err){if(err && err.errno !== -17)console.error(err)})
   let errorLogger = await fs.createWriteStream(`${destination}fail.txt`,{flags:'a'})
