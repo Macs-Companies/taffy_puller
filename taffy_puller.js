@@ -32,7 +32,7 @@ async function processOrder(orderNumber,schedule){
   if(processType === 'SOCK'){
     destination = `/Users/mccardell/Desktop/_SOCKS/${orderInfo.so} ${orderInfo.customer.replace(/\//g,' ')}/`
   }else {
-    destination = `/Users/mccardell/Desktop/test/_${processType}/${orderInfo.so} ${orderInfo.customer.replace(/\//g,' ')}/`
+    destination = `/Users/mccardell/Desktop/_PRINTPREP/_${processType}/${orderInfo.so} ${orderInfo.customer.replace(/\//g,' ')}/`
   }
   await fsPromises.mkdir(destination).catch(function(err){if(err && err.errno !== -17)console.error(err)})
   let errorLogger = await fs.createWriteStream(`${destination}fail.txt`,{flags:'a'})
