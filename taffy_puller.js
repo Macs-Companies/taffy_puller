@@ -30,8 +30,14 @@ let totalCount = 0
 // FUNCTIONS
 async function processOrder(orderNumber,schedule){
   let orderInfo = await getOrderInfo(orderNumber)
+
+  destination = `/Users/${process.env.USERNAME}/Desktop/_PRINTPREP/`
+  await fsPromises.mkdir(destination).catch(function(err){if(err && err.errno !== -17)console.error(err)})
+  destination = `/Users/${process.env.USERNAME}/Desktop/_PRINTPREP/_${processType}/`
+  await fsPromises.mkdir(destination).catch(function(err){if(err && err.errno !== -17)console.error(err)})
   destination = `/Users/${process.env.USERNAME}/Desktop/_PRINTPREP/_${processType}/${orderInfo.so} ${orderInfo.customer.replace(/\//g,' ')}/`
   await fsPromises.mkdir(destination).catch(function(err){if(err && err.errno !== -17)console.error(err)})
+
   let errorLogger = await fs.createWriteStream(`${destination}fail.txt`,{flags:'a'})
   await errorLogger.write(`${orderInfo.so} ${orderInfo.customer}\r -----------------------\n`)
   let scheduledWOs = orderInfo.wos.filter(wo => {
