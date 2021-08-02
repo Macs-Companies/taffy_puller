@@ -30,9 +30,9 @@ let totalCount = 0
 async function processOrder(orderNumber,schedule){
   let orderInfo = await getOrderInfo(orderNumber)
   if(processType === 'SOCK'){
-    destination = `./_SOCKS/${orderInfo.so} ${orderInfo.customer.replace(/\//g,' ')}/`
+    destination = `~/_SOCKS/${orderInfo.so} ${orderInfo.customer.replace(/\//g,' ')}/`
   }else {
-    destination = `./_PRINTPREP/_${processType}/${orderInfo.so} ${orderInfo.customer.replace(/\//g,' ')}/`
+    destination = `~/_PRINTPREP/_${processType}/${orderInfo.so} ${orderInfo.customer.replace(/\//g,' ')}/`
   }
   await fsPromises.mkdir(destination).catch(function(err){if(err && err.errno !== -17)console.error(err)})
   let errorLogger = await fs.createWriteStream(`${destination}fail.txt`,{flags:'a'})
