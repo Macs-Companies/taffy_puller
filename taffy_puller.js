@@ -148,7 +148,7 @@ async function constructFilePath(designName, nameDrop, type, itemName){
   //   NAME_DROP_ARRAY: nameDropInfo
   // });
 
-  let fileBase = `/Volumes/Film Output Files-1/A-Accessory/${designInfo.region}-${regionCodeMap[designInfo.region]}`;
+  let fileBase = `/Volumes/Film Output Files/A-Accessory/${designInfo.region}-${regionCodeMap[designInfo.region]}`;
   let fileGlob;
   if(typeCodeMap[type] === "STICKER"){
     fileGlob = `${fileBase}/*/*${designInfo.design_name}*/${typeCodeMap[type]}/${typeVersionMap[type]}/*.pdf`
