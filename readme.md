@@ -11,7 +11,7 @@ Download and install Github Desktop from https://desktop.github.com/
 
 *STEP 3*
 
-Clone `BoDaly/taffy_puller` to your Desktop
+Clone `Macs-Companies/taffy_puller` to your Desktop
 
 *STEP 4*
 
