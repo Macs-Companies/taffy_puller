@@ -99,9 +99,6 @@ async function processOrder(orderNumber,schedule){
     errorLogger.write(counts,function(){})
   })
 }
-async function processWorkOrder(){
-
-}
 async function getOrderInfo(orderNumber){
   let response = await axios.get(orderEndpoint+`?id=${orderNumber}`).then(json => json.data)
   // console.log(response.wos[0].items[0].designs[0].schedule[0]);
@@ -128,13 +125,22 @@ async function getFile(designInfo,type,itemName){
         fs.copyFile(fp, `${destination}_assets/${path.basename(fp)}`,function(err){if (err) {};})
       })
 
+    }else if(processType === 'SIGNS'){
+      let substrate = getSubstrate(type)
+      await fsPromises.mkdir(`${destination}_${substrate}/`).catch(function(err){if(err && err.errno !== -17)console.error(err)})
+      filePaths.forEach(fp => {
+        fs.copyFile(fp, `${destination}_${substrate}/${so}--${path.basename(fp).replace(".pdf"," _"+substrate+".pdf")}`,function(err){if (err) {};})
+      })
+    }else if(processType === "HPMAG"){
+      await fsPromises.mkdir(`${destination}_${type}/`).catch(function(err){if(err && err.errno !== -17)console.error(err)})
+      filePaths.forEach(fp => {
+        fs.copyFile(fp, `${destination}_${type}/${so}--${path.basename(fp)}`,function(err){if (err) {};})
+      })
     }else{
-
       await fsPromises.mkdir(`${destination}_${type}/`).catch(function(err){if(err && err.errno !== -17)console.error(err)})
       filePaths.forEach(fp => {
         fs.copyFile(fp, `${destination}_${type}/${path.basename(fp)}`,function(err){if (err) {};})
       })
-
     }
 
   }else{
@@ -281,6 +287,19 @@ function getScheduleType(type){
     st = "SIGNS"
   }
   return st
+}
+
+function getSubstrate(type){
+  switch(true){
+    case type.match(/[A-Za-z]$/)[0] == "A":
+    return "ALUM";
+    break;
+    case type.match(/[A-Za-z]$/)[0] == "W":
+    return "WOOD";
+    break;
+    case type.match(/[A-Za-z]$/)[0] == "F":
+    return "FAUX";
+  }
 }
 
 //INITIATE
