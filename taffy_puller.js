@@ -7,7 +7,7 @@ const axios = require('axios')
 require('dotenv').config()
 
 // ENDPOINTS
-const orderEndpoint = 'http://www.design-ink.com/so/json/soitems.php'
+const orderEndpoint = 'http://so.design-ink.com/so/json/soitems.php'
 // NOTE: examplePath --> "/Volumes/Film Output Files-1/A-Accessory/BG-Bubba Gump/Japan versions/S-BG0012J Bubba Gump Winged Name/S-BG0012 TOKYO.pdf"
 let destination;
 
